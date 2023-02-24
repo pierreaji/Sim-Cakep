@@ -10,7 +10,7 @@ typeof define === 'function' && define.amd ? define(['require'], function(requir
 (global = global || self, global.Chart = factory(global.moment));
 }(this, (function (moment) { 'use strict';
 
-moment = moment && moment.hasOwnProperty('default') ? moment['default'] : moment;
+moment = moment && Object.prototype.hasOwnProperty.call(moment, 'default') ? moment['default'] : moment;
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -181,7 +181,7 @@ var conversions = createCommonjsModule(function (module) {
 
 var reverseKeywords = {};
 for (var key in colorName) {
-	if (colorName.hasOwnProperty(key)) {
+	if (Object.prototype.hasOwnProperty.call(colorName, key)) {
 		reverseKeywords[colorName[key]] = key;
 	}
 }
@@ -206,7 +206,7 @@ var convert = module.exports = {
 
 // hide .channels and .labels properties
 for (var model in convert) {
-	if (convert.hasOwnProperty(model)) {
+	if (Object.prototype.hasOwnProperty.call(convert, model)) {
 		if (!('channels' in convert[model])) {
 			throw new Error('missing channels property: ' + model);
 		}
@@ -363,7 +363,7 @@ convert.rgb.keyword = function (rgb) {
 	var currentClosestKeyword;
 
 	for (var keyword in colorName) {
-		if (colorName.hasOwnProperty(keyword)) {
+		if (Object.prototype.hasOwnProperty.call(colorName, keyword)) {
 			var value = colorName[keyword];
 
 			// Compute comparative distance
@@ -1957,7 +1957,7 @@ Color.prototype = {
 		var value, type;
 
 		for (var prop in source) {
-			if (source.hasOwnProperty(prop)) {
+			if (Object.prototype.hasOwnProperty.call(source, prop)) {
 				value = source[prop];
 				type = ({}).toString.call(value);
 				if (type === '[object Array]') {
@@ -2335,7 +2335,7 @@ var helpers = {
 
 		if (helpers.isObject(tval) && helpers.isObject(sval)) {
 			helpers.mergeIf(tval, sval);
-		} else if (!target.hasOwnProperty(key)) {
+		} else if (!Object.prototype.hasOwnProperty.call(target, key)) {
 			target[key] = helpers.clone(sval);
 		}
 	},
@@ -2407,7 +2407,7 @@ var helpers = {
 	 */
 	inherits: function(extensions) {
 		var me = this;
-		var ChartElement = (extensions && extensions.hasOwnProperty('constructor')) ? extensions.constructor : function() {
+		var ChartElement = (extensions && Object.prototype.hasOwnProperty.call(extensions, 'constructor')) ? extensions.constructor : function() {
 			return me.apply(this, arguments);
 		};
 
@@ -3295,7 +3295,7 @@ function interpolate(start, view, model, ease) {
 
 		// if a value is added to the model after pivot() has been called, the view
 		// doesn't contain it, so let's initialize the view to the target value.
-		if (!view.hasOwnProperty(key)) {
+		if (!Object.prototype.hasOwnProperty.call(view, key)) {
 			view[key] = target;
 		}
 
@@ -3305,7 +3305,7 @@ function interpolate(start, view, model, ease) {
 			continue;
 		}
 
-		if (!start.hasOwnProperty(key)) {
+		if (!Object.prototype.hasOwnProperty.call(start, key)) {
 			start[key] = actual;
 		}
 
@@ -7279,7 +7279,7 @@ var core_layouts = {
 
 		for (; i < ilen; ++i) {
 			prop = props[i];
-			if (options.hasOwnProperty(prop)) {
+			if (Object.prototype.hasOwnProperty.call(options, prop)) {
 				item[prop] = options[prop];
 			}
 		}
@@ -8107,15 +8107,15 @@ var core_scaleService = {
 		this.defaults[type] = helpers$1.clone(scaleDefaults);
 	},
 	getScaleConstructor: function(type) {
-		return this.constructors.hasOwnProperty(type) ? this.constructors[type] : undefined;
+		return Object.prototype.hasOwnProperty.call(this.constructors, type) ? this.constructors[type] : undefined;
 	},
 	getScaleDefaults: function(type) {
 		// Return the scale defaults merged with the global settings so that we always use the latest ones
-		return this.defaults.hasOwnProperty(type) ? helpers$1.merge(Object.create(null), [core_defaults.scale, this.defaults[type]]) : {};
+		return Object.prototype.hasOwnProperty.call(this.defaults, type) ? helpers$1.merge(Object.create(null), [core_defaults.scale, this.defaults[type]]) : {};
 	},
 	updateScaleDefaults: function(type, additions) {
 		var me = this;
-		if (me.defaults.hasOwnProperty(type)) {
+		if (Object.prototype.hasOwnProperty.call(me.defaults, type)) {
 			me.defaults[type] = helpers$1.extend(me.defaults[type], additions);
 		}
 	},
@@ -16055,7 +16055,7 @@ core_controller.helpers.each(scales, function(scale, type) {
 // Loading built-in plugins
 
 for (var k in plugins) {
-	if (plugins.hasOwnProperty(k)) {
+	if (Object.prototype.hasOwnProperty.call(plugins, k)) {
 		core_controller.plugins.register(plugins[k]);
 	}
 }
