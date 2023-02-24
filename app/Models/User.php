@@ -25,7 +25,7 @@ class User extends Authenticatable
         'role'
     ];
 
-    const jenis_kelamin = [
+    public const jenis_kelamin = [
         'L' => 'L',
         'P' => 'P'
     ];
